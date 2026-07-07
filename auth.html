@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <!--login form-->
+        <div id="login-form" class="auth-box">
+            <h2>WELCOME BACK!</h2>
+            <p>Please login to place your order</p>
+            <form action="one.html"> <!--login ke baad cart pr bhjega-->
+                <div class="input-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="auth-btn">Login&Proceed</button>
+            </form>
+            <p class="switch-text">New to our site?<a href="#" onclick="toggleAuth()">Create an account</a></p>
+        </div>
+
+    <!---Register form- -->
+    <div class="auth-box style-hidden" id="register-form">
+        <h2>Create Account</h2>
+        <p>Sign up to start ordering your favorite meals</p>
+        <form action="one.html"> <!--register ke baad cart pr bhjega-->
+            <div class="input-group">
+                <input type="text" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="auth-btn">Register&Proceed</button>
+        </form>
+        <p class="switch-text">Already have an account?<a href="#" onclick="toggleAuth()">Login here</a></p>
+    </div>
+</div>
+<script>
+        function toggleAuth() {
+            var login = document.getElementById('login-form');
+            var register = document.getElementById('register-form');
+            if(login.style.display === 'none') {
+                login.style.display = 'block';
+                register.style.display = 'none';
+            } else {
+                login.style.display = 'none';
+                register.style.display = 'block';
+            }
+        }
+        document.getElementById('register-form').style.display = 'none';
+</script>
+    
+</body>
+</html>
