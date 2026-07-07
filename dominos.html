@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domino's Pizza Menu - Foodie</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Cart counter controls */
+        .cart-item-row {
+            display: none; /* Shuru me hidden rahegi jab tak qty 0 se upar na ho */
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .qty-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #d1d1d1;
+            color: #24963f;
+            font-weight: bold;
+            padding: 2px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .qty-btn:hover {
+            background-color: #24963f;
+            color: white;
+            border-color: #24963f;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(213, 213, 96); font-family: Arial, sans-serif; margin: 0; padding: 20px;">
+
+    <!-- Main Layout Content Box -->
+    <div style="display: flex; max-width: 1100px; margin: 30px auto; gap: 25px; align-items: flex-start;">
+        
+        <!-- ================= LEFT SIDE: MENU BOX ================= -->
+        <div style="flex: 2; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <h1 style="color: #1e1c1c; margin-bottom: 5px; font-size: 32px;">Domino's Pizza</h1>
+            <p style="color: #696969; margin-top: 0; font-weight: bold;">Pizzas, Fast Food, Desserts</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+            <h2 style="color: #1e1c1c; margin-bottom: 20px;">Popular Items</h2>
+
+            <!-- Item 1 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                <div>
+                    <h3 style="margin: 0 0 5px 0; color: #1e1c1c;">Margherita Pizza</h3>
+                    <p style="margin: 0; color: #696969; font-size: 14px;">Classic delight with 100% real mozzarella cheese</p>
+                    <span style="font-weight: bold; color: #1e1c1c; display: block; margin-top: 5px;">₹239</span>
+                </div>
+                <button onclick="manageCart(1, 1, 239)" class="menu-order-btn" style="border: none; cursor: pointer;">Add to Cart</button>
+            </div>
+
+            <!-- Item 2 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                <div>
+                    <h3 style="margin: 0 0 5px 0; color: #1e1c1c;">Farmhouse Pizza</h3>
+                    <p style="margin: 0; color: #696969; font-size: 14px;">Delightful combination of onion, capsicum, tomato & grilled mushroom</p>
+                    <span style="font-weight: bold; color: #1e1c1c; display: block; margin-top: 5px;">₹459</span>
+                </div>
+                <button onclick="manageCart(2, 1, 459)" class="menu-order-btn" style="border: none; cursor: pointer;">Add to Cart</button>
+            </div>
+
+            <!-- Item 3 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                <div>
+                    <h3 style="margin: 0 0 5px 0; color: #1e1c1c;">Peppy Paneer Pizza</h3>
+                    <p style="margin: 0; color: #696969; font-size: 14px;">Chunky paneer with crisp capsicum and spicy red pepper</p>
+                    <span style="font-weight: bold; color: #1e1c1c; display: block; margin-top: 5px;">₹399</span>
+                </div>
+                <button onclick="manageCart(3, 1, 399)" class="menu-order-btn" style="border: none; cursor: pointer;">Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- ================= RIGHT SIDE: LIVE CART ================= -->
+        <div style="flex: 1; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 20px;">
+            <h2 style="margin-top: 0; color: #1e1c1c; display: flex; align-items: center; gap: 8px; font-size: 22px;">
+                Your Cart 🛒
+            </h2>
+            
+            <div style="margin: 20px 0; min-height: 50px;">
+                <!-- Empty Message -->
+                <p id="empty-msg" style="color: #696969; font-size: 15px; margin: 0; display: block;">Your cart is empty. Add some delicious pizzas!</p>
+                
+                <!-- Static Card Item 1 -->
+                <div id="item-row-1" class="cart-item-row">
+                    <div style="flex: 1.5; font-weight: 500;">Margherita Pizza</div>
+                    <div style="flex: 1; display: flex; align-items: center; gap: 8px; justify-content: center;">
+                        <button onclick="manageCart(1, -1, 239)" class="qty-btn">-</button>
+                        <span id="qty-1" style="font-weight: bold;">0</span>
+                        <button onclick="manageCart(1, 1, 239)" class="qty-btn">+</button>
+                    </div>
+                    <div style="flex: 1; text-align: right; font-weight: bold;">₹<span id="price-1">0</span></div>
+                </div>
+
+                <!-- Static Card Item 2 -->
+                <div id="item-row-2" class="cart-item-row">
+                    <div style="flex: 1.5; font-weight: 500;">Farmhouse Pizza</div>
+                    <div style="flex: 1; display: flex; align-items: center; gap: 8px; justify-content: center;">
+                        <button onclick="manageCart(2, -1, 459)" class="qty-btn">-</button>
+                        <span id="qty-2" style="font-weight: bold;">0</span>
+                        <button onclick="manageCart(2, 1, 459)" class="qty-btn">+</button>
+                    </div>
+                    <div style="flex: 1; text-align: right; font-weight: bold;">₹<span id="price-2">0</span></div>
+                </div>
+
+                <!-- Static Card Item 3 -->
+                <div id="item-row-3" class="cart-item-row">
+                    <div style="flex: 1.5; font-weight: 500;">Peppy Paneer</div>
+                    <div style="flex: 1; display: flex; align-items: center; gap: 8px; justify-content: center;">
+                        <button onclick="manageCart(3, -1, 399)" class="qty-btn">-</button>
+                        <span id="qty-3" style="font-weight: bold;">0</span>
+                        <button onclick="manageCart(3, 1, 399)" class="qty-btn">+</button>
+                    </div>
+                    <div style="flex: 1; text-align: right; font-weight: bold;">₹<span id="price-3">0</span></div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+            
+            <!-- Grand Total Display -->
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px; color: #1e1c1c; margin-bottom: 25px;">
+                <span>Total Amount:</span>
+                <span style="color: #24963f; font-size: 20px;">₹<span id="grand-total">0</span></span>
+            </div>
+            
+            <!-- Place Order Link Button -->
+            <button onclick="window.location.href='auth.html'" id="checkout-btn" class="menu-order-btn" style="width: 100%; border: none; font-size: 16px; background-color: #8ccda0; cursor: not-allowed;" disabled>
+                Place Order
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT DOM LOGIC ================= -->
+    <script>
+        function manageCart(id, change, rate) {
+            const qtySpan = document.getElementById('qty-' + id);
+            const priceSpan = document.getElementById('price-' + id);
+            const rowDiv = document.getElementById('item-row-' + id);
+            
+            let currentQty = parseInt(qtySpan.innerText);
+            currentQty += change;
+
+            if (currentQty < 0) currentQty = 0;
+
+            // Updating structural HTML elements directly
+            qtySpan.innerText = currentQty;
+            priceSpan.innerText = currentQty * rate;
+
+            // Toggle element rows visibility
+            if (currentQty > 0) {
+                rowDiv.style.display = "flex";
+            } else {
+                rowDiv.style.display = "none";
+            }
+
+            updateBillSummary();
+        }
+
+        function updateBillSummary() {
+            const pr1 = parseInt(document.getElementById('price-1').innerText);
+            const pr2 = parseInt(document.getElementById('price-2').innerText);
+            const pr3 = parseInt(document.getElementById('price-3').innerText);
+            
+            const grandTotal = pr1 + pr2 + pr3;
+            document.getElementById('grand-total').innerText = grandTotal;
+            
+            const emptyLabel = document.getElementById('empty-msg');
+            const placeOrderBtn = document.getElementById('checkout-btn');
+
+            if (grandTotal > 0) {
+                emptyLabel.style.display = "none";
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.style.backgroundColor = "#24963f";
+                placeOrderBtn.style.cursor = "pointer";
+            } else {
+                emptyLabel.style.display = "block";
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.style.backgroundColor = "#8ccda0";
+                placeOrderBtn.style.cursor = "not-allowed";
+            }
+        }
+    </script>
+</body>
+</html>
