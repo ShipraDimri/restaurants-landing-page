@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalsang Menu - Foodie</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-item-row { display: none; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .qty-btn { background-color: #f8f9fa; border: 1px solid #d1d1d1; color: #24963f; font-weight: bold; padding: 2px 8px; cursor: pointer; border-radius: 4px; font-size: 14px; }
+        .qty-btn:hover { background-color: #24963f; color: white; border-color: #24963f; }
+    </style>
+</head>
+<body style="background-color: rgb(213, 213, 96); font-family: Arial, sans-serif; margin: 0; padding: 20px;">
+    <div style="display: flex; max-width: 1100px; margin: 30px auto; gap: 25px; align-items: flex-start;">
+        <div style="flex: 2; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <h1 style="color: #1e1c1c; margin-bottom: 5px; font-size: 32px;">Kalsang</h1>
+            <p style="color: #696969; margin-top: 0; font-weight: bold;">Tibetan, Japanese, Chinese</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+            <h2>Popular Items</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                <div>
+                    <h3 style="margin: 0 0 5px 0; color: #1e1c1c;">Steamed Veg Momos</h3>
+                    <p style="margin: 0; color: #696969; font-size: 14px;">Classic Tibetan style dumplings served with spicy red chutney</p>
+                    <span style="font-weight: bold; color: #1e1c1c; display: block; margin-top: 5px;">₹160</span>
+                </div>
+                <button onclick="manageCart(1, 1, 160)" class="menu-order-btn" style="border: none; cursor: pointer;">Add to Cart</button>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px dashed #eee;">
+                <div>
+                    <h3 style="margin: 0 0 5px 0; color: #1e1c1c;">Tibetan Veg Thukpa</h3>
+                    <p style="margin: 0; color: #696969; font-size: 14px;">Healthy noodle soup loaded with fresh mountain veggies and herbs</p>
+                    <span style="font-weight: bold; color: #1e1c1c; display: block; margin-top: 5px;">₹210</span>
+                </div>
+                <button onclick="manageCart(2, 1, 210)" class="menu-order-btn" style="border: none; cursor: pointer;">Add to Cart</button>
+            </div>
+        </div>
+        <div style="flex: 1; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 20px;">
+            <h2 style="margin-top: 0; color: #1e1c1c;">Your Cart 🛒</h2>
+            <div style="margin: 20px 0; min-height: 50px;">
+                <p id="empty-msg">Your cart is empty. Try Tibetan food!</p>
+                <div id="item-row-1" class="cart-item-row">
+                    <div style="flex: 1.5;">Veg Momos</div>
+                    <div style="display: flex; gap: 8px;"><button onclick="manageCart(1, -1, 160)" class="qty-btn">-</button><span id="qty-1">0</span><button onclick="manageCart(1, 1, 160)" class="qty-btn">+</button></div>
+                    <div style="flex: 1; text-align: right; font-weight: bold;">₹<span id="price-1">0</span></div>
+                </div>
+                <div id="item-row-2" class="cart-item-row">
+                    <div style="flex: 1.5;">Veg Thukpa</div>
+                    <div style="display: flex; gap: 8px;"><button onclick="manageCart(2, -1, 210)" class="qty-btn">-</button><span id="qty-2">0</span><button onclick="manageCart(2, 1, 210)" class="qty-btn">+</button></div>
+                    <div style="flex: 1; text-align: right; font-weight: bold;">₹<span id="price-2">0</span></div>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px;">
+                <span>Total Amount:</span><span>₹<span id="grand-total">0</span></span>
+            </div>
+            <button onclick="window.location.href='auth.html'" id="checkout-btn" class="menu-order-btn" style="width: 100%; border: none; background-color: #8ccda0; cursor: not-allowed;" disabled>Place Order</button>
+        </div>
+    </div>
+    <script>
+        function manageCart(id, change, rate) {
+            const qtySpan = document.getElementById('qty-' + id);
+            const priceSpan = document.getElementById('price-' + id);
+            const rowDiv = document.getElementById('item-row-' + id);
+            let currentQty = parseInt(qtySpan.innerText) + change;
+            if (currentQty < 0) currentQty = 0;
+            qtySpan.innerText = currentQty;
+            priceSpan.innerText = currentQty * rate;
+            rowDiv.style.display = currentQty > 0 ? "flex" : "none";
+            updateBillSummary();
+        }
+        function updateBillSummary() {
+            const grandTotal = parseInt(document.getElementById('price-1').innerText) + parseInt(document.getElementById('price-2').innerText);
+            document.getElementById('grand-total').innerText = grandTotal;
+            document.getElementById('empty-msg').style.display = grandTotal > 0 ? "none" : "block";
+            const btn = document.getElementById('checkout-btn');
+            btn.disabled = grandTotal === 0;
+            btn.style.backgroundColor = grandTotal > 0 ? "#24963f" : "#8ccda0";
+            btn.style.cursor = grandTotal > 0 ? "pointer" : "not-allowed";
+        }
+    </script>
+</body>
+</html>
