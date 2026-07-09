@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="style.css">
-    <title>Restaurants landing page</title>
+    <title>Restaurant landing page</title>
 </head>
 <body>
     <h1>WELCOME!!
@@ -36,7 +36,7 @@
     <input type="text" placeholder="Search for restaurants, cuisines or a dish..." class="search-input">
     <button class="search-btn">Search</button>
 </div>
-<div class="restraurants-section">
+<div class="restaurants-section">
     <h2 class="section-title">Popular Restaurants in Your Area</h2>
     <div class="cards-container">
     <!-- Card 1 -->
@@ -96,20 +96,110 @@
      </a>
 
     <!-- Card 5 -->
-     <a href="kfc.html" style="text-decoration: none;color: inherit;">
-    <div class="res-card">
-        <img src="kfc.png" alt="KFC" class="res-img">
-        <div class="res-details">
-            <div class="res-row">
-                <h4 class="res-name">KFC</h4>
-                <span class="res-rating">4.7 ⭐</span>
+ <a href="kfc.html" style="text-decoration: none; color: inherit;">
+            <div class="res-card">
+                <img src="kfc.png" alt="KFC" class="res-img">
+                <div class="res-details">
+                    <div class="res-row">
+                        <h4 class="res-name">KFC</h4>
+                        <span class="res-rating">4.7 ⭐</span>
+                    </div>
+                    <p class="res-cuisine">Tenders, Bone and Boneless chicken, Beverages</p>
+                </div>
             </div>
-            <p class="res-cuisine">Tenders,Bone and Boneless chicken,Beverages</p>
-        </div>
-    </div>
+        </a>
+
+        <a href="ama.html" style="text-decoration: none; color: inherit;">
+            <div class="res-card">
+                <img src="italian.jpg" alt="Ama's Cafe" class="res-img" style="object-position: center 65%; object-fit: cover;">
+                <div class="res-details">
+                    <div class="res-row">
+                        <h4 class="res-name">Ama's Café</h4>
+                        <span class="res-rating">4.7 ⭐</span>
+                    </div>
+                    <p class="res-cuisine">Italian, Continental, Coffee, Desserts</p>
+                </div>
+            </div>
+        </a>
+        <!-- Card 7: Sea Deck -->
+        <a href="sea-deck.html" style="text-decoration: none; color: inherit;">
+            <div class="res-card">
+                <!-- Mast aesthetic seafood picture ka Unsplash URL -->
+                <img src="seafood.jpg" 
+                     alt="Sea Deck" 
+                     class="res-img" 
+                     style="object-position: center; object-fit: cover;">
+                <div class="res-details">
+                    <div class="res-row">
+                        <h4 class="res-name">Sea Deck</h4>
+                        <span class="res-rating">3.8 ⭐</span>
+                    </div>
+                    <p class="res-cuisine">Sea Food, Prawns, Fish Grill, Continental</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Card 8: Wafflesome -->
+        <a href="wafflesome.html" style="text-decoration: none; color: inherit;">
+            <div class="res-card">
+                <!-- Mast dynamic aur loaded waffles ki image -->
+                <img src="waffle.jpg" 
+                     alt="Wafflesome" 
+                     class="res-img" 
+                     style="object-position: center; object-fit: cover;">
+                <div class="res-details">
+                    <div class="res-row">
+                        <h4 class="res-name">Wafflesome</h4>
+                        <span class="res-rating">4 ⭐</span>
+                    </div>
+                    <p class="res-cuisine">Waffles, Desserts, Ice Cream, Shakes</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Card 9: Udupi -->
+        <a href="udupi.html" style="text-decoration: none; color: inherit;">
+            <div class="res-card">
+                <!-- Crispy Dosa aur Sambar ki mast picture -->
+                <img src="udupi.jpg" 
+                     alt="Udupi" 
+                     class="res-img" 
+                     style="object-position: center; object-fit: cover;">
+                <div class="res-details">
+                    <div class="res-row">
+                        <h4 class="res-name">Udupi Restaurant</h4>
+                        <span class="res-rating">4.8 ⭐</span>
+                    </div>
+                    <p class="res-cuisine">South Indian, Dosa, Idli, Filter Coffee</p>
+                </div>
+            </div>
+        </a>
 </div> 
-</a>
+</div>
 
 </div>
+<script>
+const searchInput = document.querySelector(".search-input");
+const restaurantCards = document.querySelectorAll(".res-card");
+
+searchInput.addEventListener("input", function () {
+    const filterValue = searchInput.value.toLowerCase().trim();
+
+    restaurantCards.forEach(function (card) {
+        const resName = card.querySelector(".res-name").textContent.toLowerCase();
+        const resCuisine = card.querySelector(".res-cuisine").textContent.toLowerCase();
+
+        if (
+            filterValue === "" ||
+            resName.includes(filterValue) ||
+            resCuisine.includes(filterValue)
+        ) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+});
+</script>
 </body>
 </html>
